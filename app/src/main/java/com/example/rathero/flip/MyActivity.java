@@ -1,16 +1,23 @@
 package com.example.rathero.flip;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.RadioButton;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 public class MyActivity extends Activity {
+
+    private static final int ACTION_PLAY = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +70,27 @@ public class MyActivity extends Activity {
     }
     protected void startPlay() {
         //Start the game
+        Intent i = new Intent(this,GameField.class);
+
+        SeekBar seekX = (SeekBar) findViewById(R.id.seekBarX);
+        i.putExtra("xValue",seekX.getProgress());
+
+        SeekBar seekY = (SeekBar) findViewById(R.id.seekBarY);
+        i.putExtra("yValue",seekY.getProgress());
+
+        SeekBar seekColor = (SeekBar) findViewById(R.id.seekBarColors);
+        i.putExtra("colorValue",seekColor.getProgress());
+
+        RadioButton rd = (RadioButton) findViewById(R.id.radioButtonC);
+        i.putExtra("colorBool",rd.isChecked()?"C":"N");
+
+        CheckBox check = (CheckBox) findViewById(R.id.checkBoxS);
+        i.putExtra("sonidoBool",check.isChecked());
+
+        check = (CheckBox) findViewById(R.id.checkBoxV);
+        i.putExtra("vibracionBool",check.isChecked());
+
+        startActivityForResult(i,ACTION_PLAY);
     }
     protected void updateX(int progress) {
         //Set x parameter
@@ -84,11 +112,11 @@ public class MyActivity extends Activity {
 
 
 
-/*
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.my, menu);
+        getMenuInflater().inflate(R.menu.config, menu);
         return true;
     }
 
@@ -98,9 +126,35 @@ public class MyActivity extends Activity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
+        switch(id){
+            case R.id.m_about:
+                showAbout();
+                return true;
+            case R.id.m_player:
+                showPlayer();
+                return true;
+            case R.id.m_howto:
+                showHowTo();
+                return true;
         }
         return super.onOptionsItemSelected(item);
-    }*/
+    }
+
+    private void showAbout() {
+        Intent i = new Intent(this,About.class);
+        startActivity(i);
+    }
+    private void showPlayer() {
+        showToast("Clickado sobre Jugador",2);
+    }
+    private void showHowTo() {
+        Intent i = new Intent(this,HowTo.class);
+        startActivity(i);
+    }
+
+    protected void showToast(String txt, int duration){
+        Context context = getApplicationContext();
+        Toast toast = Toast.makeText(context,txt,duration);
+        toast.show();
+    }
 }

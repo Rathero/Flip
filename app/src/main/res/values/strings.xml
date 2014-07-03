@@ -10,5 +10,11 @@
     <string name="vibration">Vibración</string>
     <string name="play">Jugar</string>
     <string name="value">Valor</string>
+    <string name="menu_about">Acerca de</string>
+    <string name="menu_howto">Como jugar</string>
+    <string name="menu_player">Jugador</string>
+    <string name="how_to_text">Texto de como jugar aquí</string>
+    <string name="about_me">Creador: Rathero! ^^</string>
+    <string name="title_about">Acerda de</string>
 
 </resources>
